@@ -77,11 +77,20 @@ void ingresarvuelo(avion **vuelos, int *cantidad, int *capacidad) { //vuelve a r
 	printf("Vuelo agregado correctamente\n");
 }
 
+//funcion para mostrar los vuelos ingresados en pantalla
 
-void mostraraviones(Identificacion[], int i,int,int) {
-	for (i = 0; i <= v; i++){ 
-	printf("avion %d ", i);
-	puts(Identificacion[i]);
+void mostraraviones(avion *vuelos, int cantidad) {  //recibe puntero a la struct del avion y un entero q indica los elementos a recorrer
+	if (cantidad == 0) {
+		printf("\nno hay vuelos registrados para mostrar\n");
+		return;
+	}
+	
+	printf("\n== aviones registrados ==\n");
+	for (int i = 0; i < cantidad; i++) { //bucle que recorre el arreglo y muestra los datos de los vuelos ingresados
+		printf("  Avion %d:\n", i + 1);
+		printf("  Nombre: %s\n", vuelos[i].nombre);
+		printf("  Frecuencia de Radio: %.2f MHz\n", vuelos[i].fdr);
+		printf("  Distancia: %.2f km\n", vuelos[i].d);
 	}
 }
 void cercanas{
