@@ -4,8 +4,10 @@
 typedef struct identificacion{
 	float fdr; /*frecuencia de radio*/
 	float d; 	/*distancia*/
-	char nombre[30];
-}Identificacion[];
+	char nombre[50];
+}avion;
+
+
 void menu(){
 	
 	printf("\n=========================");
@@ -15,29 +17,34 @@ void menu(){
 	printf("4. cerrar sala de comandos");
 	printf("\n=========================");
 }
- cantidadv(int c){
-	struct identificacion vuelos;
-	int v,i;
-	float t,l,*pid,*temp;
-	printf("ingrese la cantidad de vuelos: ");
-	scanf("%d", &v);
-	printf("usted ingresara %d vuelos",&v);
-	for(i=1;i<=v;i++){
-		printf("complete los datos del vuelo %d\n",i);
-		printf("ingrese la frecuencia de radio: ");
-		scanf("%f"&t);
-		temp = &t;
-		(*temp)= Identificacion.fdr;
-		printf("\ningrese la distancia: ");
-		scanf("%f",&l);
-		temp=&l;
-		(*temp)= identificacion.d;
-		printf("\ningrese el nombre del vuelo %d: ",i);
-		gets(identification.nombre[i]);
-		free(temp);
+
+	//funcion para seleccionar la cantidad de vuelos y asignarle la memoria dinamica correspondiente
+	
+	
+void cantidad(avion **vuelos, int *cantidad, int *capacidad) {
+		printf("Ingrese la cantidad de vuelos iniciales: ");
+		scanf("%d", cantidad); 
+		
+		*capacidad = *cantidad;
+		*vuelos = (avion *)malloc((*capacidad) * sizeof(avion));
+		
+		if (*vuelos == NULL) {
+			printf("Error de asignacion de memoria.\n");
+			return;
+		}
+		
+		for (int i = 0; i < *cantidad; i++) {
+			printf("\nComplete los datos del vuelo %d:\n", i + 1);
+			printf("Ingrese la frecuencia de radio: ");
+			scanf("%f", &((*vuelos)[i].fdr)); 
+			
+			printf("Ingrese la distancia: ");
+			scanf("%f", &((*vuelos)[i].d));   
+			
+			printf("Ingrese el nombre del vuelo %d: ", i + 1);
+			scanf("%s", (*vuelos)[i].nombre); 
+		}
 	}
-	return c;
-}
 
 void ingresarvuelo{
 	identificacion[v+1];
@@ -80,7 +87,7 @@ int main() {
 		printf("Opcion: ");
 		scanf("%d", &opcion);
 		switch(opcion){
-			case 1: cantidadv;
+			case 1: cantidad;
 			break;
 			case 2: ingresarnuevovuelo;
 			break;
