@@ -93,18 +93,38 @@ void mostraraviones(avion *vuelos, int cantidad) {  //recibe puntero a la struct
 		printf("  Distancia: %.2f km\n", vuelos[i].d);
 	}
 }
-void cercanas{
-	float k
-	for(i=1;i<=v;i++){
-		k = identificacion[i+1].fdr - Identificacion[i].fdr;
-	}
-	if(k<10){
-		puts("barcos cercanos menores a una fdr de 10m:%s y tiene una distancia de %f ", Identificacion[i],&k):
-	}
+void freq_cercanas(avion *vuelos, int cantidad) {  //recibe un puntero al arreglo de estructura y un entero que es el limite sup del arreglo
+	if (cantidad == 0) {  //comprobamos que hayan vuelos a buscar
+		printf("\nno hay vuelos registrados aun\n");
+		return;
 	}
 	
+	float freq_buscada, porcentaje;
+	printf("\nIngrese la frecuencia de radio objetivo (MHz): ");
+	scanf("%f", &freq_buscada);
+	printf("Ingrese el porcentaje de tolerancia permitido: ");
+	scanf("%f", &porcentaje);
+	
+	float margen = freq_buscada * (porcentaje / 100.0); // Calculamo el margen inferior y superior según el porcentaje
+	float limite_inf = freq_buscada - margen;  //definimos los limites de nuestro entorno
+	float limite_sup = freq_buscada + margen;
+	
+	printf("\n== Resultados: Vuelos con frecuencia entre %.2f y %.2f MHz ==\n", limite_inf, limite_sup);
+	int encontrados = 0;
+	
+	for (int i = 0; i < cantidad; i++) {
+		
+		if (vuelos[i].fdr >= limite_inf && vuelos[i].fdr <= limite_sup) { // verificamos si la frecuencia del vuelo cae dentro del rango de tolerancia
+			printf("  Coincidencia: Vuelo '%s' | Frecuencia: %.2f MHz | Distancia: %.2f km\n", 
+				   vuelos[i].nombre, vuelos[i].fdr, vuelos[i].d); 
+			encontrados++;
+		} //llave del if
+	}
+	
+	if (encontrados == 0) {
+		printf("No se encontraron vuelos dentro del porcentaje de tolerancia buiscado\n");
+	}
 }
-
 
 int main() {
 	int opcion;
