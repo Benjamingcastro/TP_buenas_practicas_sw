@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-typedef struct identificacion{
+typedef struct{
 	float fdr; /*frecuencia de radio*/
 	float d; 	/*distancia*/
 	char nombre[50];
@@ -20,20 +20,19 @@ void menu(){
 
 	//funcion para seleccionar la cantidad de vuelos y asignarle la memoria dinamica correspondiente
 	
-	
-void cantidad(avion **vuelos, int *cantidad, int *capacidad) {
+void cantidad(avion **vuelos, int *cantidad, int *capacidad) {  //de parametros de entrada recibe punteros para modificar y actualizar los valores en la funcion main
 		printf("Ingrese la cantidad de vuelos iniciales: ");
 		scanf("%d", cantidad); 
 		
 		*capacidad = *cantidad;
-		*vuelos = (avion *)malloc((*capacidad) * sizeof(avion));
+		*vuelos = (avion *)malloc((*capacidad) * sizeof(avion));  //asignacion de memoria
 		
 		if (*vuelos == NULL) {
-			printf("Error de asignacion de memoria.\n");
+			printf("Error de asignacion de memoria.\n"); //verificamos si se asigno la memoria
 			return;
 		}
 		
-		for (int i = 0; i < *cantidad; i++) {
+		for (int i = 0; i < *cantidad; i++) { //utilizamos un for para repetir el bucle hasta ingresar la cantidad de vuelos especificada
 			printf("\nComplete los datos del vuelo %d:\n", i + 1);
 			printf("Ingrese la frecuencia de radio: ");
 			scanf("%f", &((*vuelos)[i].fdr)); 
@@ -46,21 +45,39 @@ void cantidad(avion **vuelos, int *cantidad, int *capacidad) {
 		}
 	}
 
-void ingresarvuelo{
-	identificacion[v+1];
-	rintf("complete los datos del vuelo %d\n",i+1);
+//funcion para ingresar un vuelo en todo momento
+
+
+void ingresarvuelo(avion **vuelos, int *cantidad, int *capacidad) { //vuelve a recibir punteros de parametros de entrada
+	if (*capacidad == 0) {
+		*capacidad = 1;
+		*vuelos = (avion *)malloc((*capacidad) * sizeof(avion)); //le asignamos memoria
+	} else {
+		(*capacidad)++;
+		avion *temp = (avion *)realloc(*vuelos, (*capacidad) * sizeof(avion));
+		if (temp == NULL) {
+			printf("Error al reasignar memoria.\n");
+			return;
+		}
+		*vuelos = temp;
+	}
+	
+	int i = *cantidad; 
+	printf("\ncomplete los datos del nuevo vuelo %d:\n", i + 1); //ingresamos los datos del vuelo
 	printf("ingrese la frecuencia de radio: ");
-	scanf("%f"&t);
-	temp = &t;
-	(*temp)= Identificacion.fdr;
-	printf("\ningrese la distancia: ");
-	scanf("%f",&l);
-	temp=&l;
-	(*temp)= Identificacion.d;
-	printf("\ningrese el nombre del vuelo %d: ",i);
-	gets(identification.nombre[i+1]);
-	free(temp);
+	scanf("%f", &((*vuelos)[i].fdr));
+	
+	printf("ingrese la distancia: ");
+	scanf("%f", &((*vuelos)[i].d));
+	
+	printf("ingrese el nombre del vuelo %d: ", i + 1);
+	scanf("%s", (*vuelos)[i].nombre);
+	
+	(*cantidad)++; 
+	printf("Vuelo agregado correctamente\n");
 }
+
+
 void mostraraviones(Identificacion[], int i,int,int) {
 	for (i = 0; i <= v; i++){ 
 	printf("avion %d ", i);
@@ -73,7 +90,7 @@ void cercanas{
 		k = identificacion[i+1].fdr - Identificacion[i].fdr;
 	}
 	if(k<10){
-		puts("barcos cercacnos menores a una fdr de 10m:%s y tiene una distancia de %f ", Identificacion[i],&k):
+		puts("barcos cercanos menores a una fdr de 10m:%s y tiene una distancia de %f ", Identificacion[i],&k):
 	}
 	}
 	
