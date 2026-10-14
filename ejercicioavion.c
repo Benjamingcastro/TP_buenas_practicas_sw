@@ -10,17 +10,17 @@ typedef struct{
 
 void menu(){
 	
-	printf("\n=========================");
+	printf("\n================================\n");
 	printf("1. ingresar cantidad de vuelos\n");
 	printf("2. ingresar un nuevo vuelo\n");
 	printf("3. mostrar frecuencias cercanas\n");
 	printf("4. cerrar sala de comandos");
-	printf("\n=========================");
+	printf("\n================================\n");
 }
 
 	//funcion para seleccionar la cantidad de vuelos y asignarle la memoria dinamica correspondiente
 	
-void cantidad(avion **vuelos, int *cantidad, int *capacidad) {  //de parametros de entrada recibe punteros para modificar y actualizar los valores en la funcion main
+void cantidadv(avion **vuelos, int *cantidad, int *capacidad) {  //de parametros de entrada recibe punteros para modificar y actualizar los valores en la funcion main
 		printf("Ingrese la cantidad de vuelos iniciales: ");
 		scanf("%d", cantidad); 
 		
@@ -126,26 +126,41 @@ void freq_cercanas(avion *vuelos, int cantidad) {  //recibe un puntero al arregl
 	}
 }
 
-int main() {
+int main() {  //funcion principal
 	int opcion;
+	avion *vuelos = NULL; // Puntero para la memoria dinamica de los aviones
+	int cantidad = 0;     // Cantidad actual de vuelos registrados
+	int capacidad = 0;    // Capacidad total reservada en memoria
+	
 	do {
-		menu();                                  
+		menu();          
 		printf("Opcion: ");
-		scanf("%d", &opcion);
-		switch(opcion){
-			case 1: cantidad;
+		scanf("%d", &opcion);   
+		
+		switch(opcion) {   //en cada caso llamamos a la funcion responsable de hacer lo que el usuario haya elegido
+		case 1: 
+			cantidadv(&vuelos, &cantidad, &capacidad); 
 			break;
-			case 2: ingresarnuevovuelo;
+		case 2: 
+			ingresarvuelo(&vuelos, &cantidad, &capacidad); 
 			break;
-			case 3: mostraraviones;
+		case 3: 
+			mostraraviones(vuelos, cantidad); 
 			break;
-			case 4: cercanas; 
+		case 4: 
+			freq_cercanas(vuelos, cantidad);
 			break;
-			case 5: printf("hasta pronto");
- 		}
-	} while (opcion!=5);	
+		case 5: 
+			printf("Hasta pronto!\n");
+			break;
+		default:
+			printf("Opcion invalida\n");
+		}
+	} while (opcion != 5); 
+	
+	if (vuelos != NULL) {
+		free(vuelos);
+	}
+	
 	return 0;
 }
-
-
-
